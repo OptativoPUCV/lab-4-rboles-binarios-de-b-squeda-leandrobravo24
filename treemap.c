@@ -41,6 +41,7 @@ Esta función recibe la función de comparación de claves y crea un mapa (TreeM
 inicializando sus variables. 
 El siguiente código muestra como inicializar la función de comparación. 
 Reserve memoria, inicialice el resto de variables y retorne el mapa.*/
+
 TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2)) {
     TreeMap * new = (TreeMap *)malloc(sizeof(TreeMap));
     new->root = NULL;
@@ -51,7 +52,6 @@ TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2)) {
 
 
 void insertTreeMap(TreeMap * tree, void* key, void * value) {
-
 }
 
 TreeNode * minimum(TreeNode * x){
@@ -75,8 +75,22 @@ void eraseTreeMap(TreeMap * tree, void* key){
 
 
 
-
+/*2.- Implemente la función Pair* searchTreeMap(TreeMap* tree, void* key), 
+la cual busca el nodo con clave igual a key y retorna el **Pair** asociado al nodo. 
+Si no se encuentra la clave retorna NULL.
+Recuerde hacer que el current apunte al nodo encontrado.*/
 Pair * searchTreeMap(TreeMap * tree, void* key) {
+    TreeNode * aux = tree->root;
+    while (aux != NULL) {
+        if (is_equal(tree, key, aux->pair->key)) {
+            tree->current = aux;
+            return aux->pair;
+        } else if (tree->lower_than(key, aux->pair->key) == 1) {
+            aux = aux->left;
+        } else {
+            aux = aux->right;
+        }
+    }
     return NULL;
 }
 
